@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body, h1 {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #000000, #6a0dad); 
+            line-height: 1.6;
+            padding: 20px;
+            text-align: center; 
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #eae2e2;
+            margin-bottom: 20px;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 0 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #6a0dad;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-decoration: none;
+            color: #090909;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .card i {
+            font-size: 3rem;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        /* Efeito de hover no card */
+        .card:hover {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bem-vindo à Página Inicial</h1>
+        <div class="card-container">
+            <a href="createpixkey.html" class="card">
+                <i class="fas fa-key"></i>
+                <h2>Criar Chave Pix</h2>
+            </a>
+            <a href="pixin.html" class="card">
+                <i class="fas fa-money-bill-wave"></i>
+                <h2>Fazer Pix</h2>
+            </a>
+            <a href="checklimit.html" class="card">
+                <i class="fas fa-calendar-day"></i>
+                <h2>Limites Diários</h2>
+            </a>
+            <a href="extrato.html" class="card">
+                <i class="fas fa-book"></i>
+                <h2>Extrato</h2>
+            </a>
+            <a href="dailyLimit.html" class="card" id="dailyLimit">
+                <i class="fas fa-pencil"></i>
+                <h2>Definir Limite Diário</h2>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

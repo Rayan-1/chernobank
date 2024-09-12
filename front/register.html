@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#register-form').submit(function(event) {
+                event.preventDefault(); 
+
+                const username = $('#register-username').val();
+                const password = $('#register-password').val();
+
+                $.ajax({
+                    url: 'http://127.0.0.1:5000/register',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ username: username, password: password }),
+                    success: function(response, textStatus, jqXHR) {
+                        $('#message').text(response.message);
+
+                        
+                        if (jqXHR.status === 200 || jqXHR.status === 201) {
+                            $('#message').css('color', 'green'); 
+                            setTimeout(function() {
+                                window.location.href = 'login.html'; 
+                            }, 3000);
+                        } else {
+                            $('#message').css('color', 'red'); 
+                        }
+                    },
+                    error: function(response) {
+                        $('#message').text(response.responseJSON.message);
+                        $('#message').css('color', 'red'); 
+                    }
+                });
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Cadastro</h1>
+    <form id="register-form">
+        <label for="register-username">Usuário:</label>
+        <input type="text" id="register-username" name="username" required>
+        <label for="register-password">Senha:</label>
+        <input type="password" id="register-password" name="password" required>
+        <button type="submit">Cadastrar</button>
+    </form>
+    <p id="message"></p>
+    <p style="color: white;">
+        Já tem uma conta? <a href="login.html" style="color: white;">Faça o Login</a>
+    </p>
+</body>
+</html>

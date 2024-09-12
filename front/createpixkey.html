@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Chave Pix</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#criarChaveBtn').click(function(event) {
+                event.preventDefault(); // Evita o recarregamento da página
+
+                const chavePix = $('#create-pix-key').val();
+                
+                $.ajax({
+                    url: 'http://127.0.0.1:5000/criar_chave_pix',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ chave: chavePix }),
+                    success: function(response) {
+                        $('#message').text(response.message);
+                        $('#message').css('color', 'green');
+                        // Redireciona após 2 segundos para garantir que a mensagem de sucesso seja visível
+                        setTimeout(function() {
+                            window.location.href = 'index.html';
+                        }, 2000);
+                    },
+                    error: function(response) {
+                        $('#message').text(response.responseJSON.message);
+                        $('#message').css('color', 'red');
+                    }
+                });
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Criar Chave Pix</h1>
+    <form id="create-pix-form">
+        <label for="create-pix-key">Chave Pix:</label>
+        <input type="text" id="create-pix-key" name="key" required>
+        <button id="criarChaveBtn" type="button">Criar Chave</button>
+    </form>
+    <p id="message"></p>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extrato</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body, h1 {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #000000, #6a0dad); 
+            line-height: 1.6;
+            padding: 20px;
+            text-align: center;
+            color: #eae2e2; /* Cor do texto para contraste */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #eae2e2;
+        }
+
+        form {
+            margin: 0 auto;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.9); /* Fundo do formulário */
+            color: #eae2e2; /* Cor do texto do formulário */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            color: #000; 
+        }
+
+        button {
+            background-color: #6a0dad; 
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1em;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #5a0a9e;
+        }
+
+        #extrato-message {
+            font-size: 1.2em;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('#extrato-form').submit(function(event) {
+                event.preventDefault(); 
+
+                const chavePix = $('#extrato-pix-key').val();
+
+                $.ajax({
+                    url: 'http://127.0.0.1:5000/extrato',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ chave: chavePix }),
+                    success: function(response) {
+                        $('#extrato-message').text('Transações: ' + JSON.stringify(response.transacoes));
+                        $('#extrato-message').css('color', 'green');
+                    },
+                    error: function(response) {
+                        $('#extrato-message').text(response.responseJSON.message);
+                        $('#extrato-message').css('color', 'red'); 
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Extrato</h1>
+    <form id="extrato-form">
+        <label for="extrato-pix-key">Chave Pix:</label>
+        <input type="text" id="extrato-pix-key" name="key" required>
+        <button type="submit" id="extratoBtn">Consultar</button>
+    </form>
+    <p id="extrato-message"></p>
+</body>
+</html>

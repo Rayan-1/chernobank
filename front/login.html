@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#login-form').submit(function(event) {
+                event.preventDefault(); 
+                
+                const username = $('#login-username').val();
+                const password = $('#login-password').val();
+                
+                $.ajax({
+                    url: 'http://127.0.0.1:5000/login',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ username: username, password: password }),
+                    success: function(response, textStatus, jqXHR) {
+                        $('#message').text(response.message);
+
+                        
+                        if (jqXHR.status === 200 || jqXHR.status === 201) {
+                            $('#message').css('color', 'green'); 
+                            setTimeout(function() {
+                                window.location.href = 'index.html'; // Redireciona após 5 segundos
+                            }, 5000);
+                        } else {
+                            $('#message').css('color', 'red'); 
+                        }
+                    },
+                    error: function(response) {
+                        $('#message').text(response.responseJSON.message);
+                        $('#message').css('color', 'red'); 
+                    }
+                });
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Login</h1>
+    <form id="login-form">
+        <label for="login-username">Usuário:</label>
+        <input type="text" id="login-username" name="username" required>
+        <label for="login-password">Senha:</label>
+        <input type="password" id="login-password" name="password" required>
+        <button type="submit">Entrar</button>
+    </form>
+    <p id="message"></p>
+    <p style="color: white;">
+        Não tem uma conta? <a href="register.html" style="color: white;">Cadastre-se aqui</a>
+    </p>
+</body>
+</html>

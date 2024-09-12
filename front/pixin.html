@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagar com Pix</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#pay-pix-form').submit(function(event) {
+                event.preventDefault(); 
+
+                const chavePix = $('#pay-pix-key').val();
+                const valorPix = parseFloat($('#pay-pix-amount').val());
+
+                $.ajax({
+                    url: 'http://127.0.0.1:5000/realizar_pix',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ chave: chavePix, valor: valorPix }),
+                    success: function(response) {
+                        $('#message').text(response.message + " - Chave: " + response.chave + ", Valor: " + response.valor);
+                        $('#message').css('color', 'green');
+                        
+                        // Redireciona após 2 segundos para garantir que a mensagem de sucesso seja visível
+                        setTimeout(function() {
+                            window.location.href = 'index.html';
+                        }, 2000);
+                    },
+                    error: function(response) {
+                        $('#message').text(response.responseJSON.message);
+                        $('#message').css('color', 'red'); 
+                    }
+                });
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Pagar com Pix</h1>
+    <form id="pay-pix-form">
+        <label for="pay-pix-key">Chave Pix:</label>
+        <input type="text" id="pay-pix-key" name="key" required>
+        <label for="pay-pix-amount">Valor:</label>
+        <input type="number" id="pay-pix-amount" name="amount" step="0.01" min="0" required>
+        <button type="submit">Pagar</button>
+    </form>
+    <p id="message"></p>
+</body>
+</html>

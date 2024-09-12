@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Limite Diário</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#check-daily-limit-form').submit(function(event) {
+                event.preventDefault(); 
+                
+                const chavePix = $('#pix-key').val(); 
+                
+                $.ajax({
+                    url: `http://127.0.0.1:5000/verificar_limite_diario?chave=${chavePix}`,
+                    type: 'GET',
+                    success: function(response) {
+                        const message = response.excedido 
+                            ? `Limite diário excedido! Total gasto: R$ ${response.total_diario.toFixed(2)} de R$ ${response.limite_maximo.toFixed(2)}.` 
+                            : `Total gasto hoje: R$ ${response.total_diario.toFixed(2)} de R$ ${response.limite_maximo.toFixed(2)}.`;
+                        $('#daily-limit-message').text(message);
+                        $('#daily-limit-message').css('color', response.excedido ? 'red' : 'green'); 
+                    },
+                    error: function(response) {
+                        $('#daily-limit-message').text(response.responseJSON.message);
+                        $('#daily-limit-message').css('color', 'red'); 
+                    }
+                });
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Verificar Limite Diário</h1>
+    <form id="check-daily-limit-form">
+        <label for="pix-key">Chave Pix:</label>
+        <input type="text" id="pix-key" name="key" required>
+        <button type="submit">Verificar Limite Diário</button>
+    </form>
+    <p id="daily-limit-message"></p>
+</body>
+</html>

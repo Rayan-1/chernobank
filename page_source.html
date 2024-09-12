@@ -1,0 +1,57 @@
+<html lang="pt-br"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Extrato</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#view-statement-form').submit(function(event) {
+                event.preventDefault(); 
+                
+                const chave = $('#view-statement-key').val();
+                
+                $.ajax({
+                    url: 'http://127.0.0.1:5000/extrato',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ chave: chave }),
+                    success: function(response) {
+                        let statementHtml = '<h2>Extrato</h2>';
+                        if (response.transacoes.length > 0) {
+                            response.transacoes.forEach(transacao => {
+                              
+                                let valorFormatado = transacao.valor.replace('.', ',');
+                                statementHtml += `<p>Valor: ${valorFormatado} - Tipo: ${transacao.operacao}</p>`;
+                            });
+                            
+                            $('#statement-message').css('color', 'green');
+                            $('#statement-message').html(statementHtml);
+                        } else {
+                            statementHtml += '<p>Sem transações para esta chave.</p>';
+                            
+                            $('#statement-message').css('color', 'green');
+                            $('#statement-message').html(statementHtml);
+                        }
+                    },
+                    error: function(response) {
+                       
+                        $('#statement-message').css('color', 'red');
+                        $('#statement-message').text(response.responseJSON.message);
+                    }
+                });
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Visualizar Extrato</h1>
+    <form id="view-statement-form">
+        <label for="view-statement-key">Chave Pix:</label>
+        <input type="text" id="view-statement-key" name="chave" required="">
+        <button type="submit">Ver Extrato</button>
+    </form>
+    <p id="statement-message"></p>
+
+
+</body></html>

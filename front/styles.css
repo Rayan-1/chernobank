@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #000000, #6a0dad); 
+    line-height: 1.6;
+    padding: 20px;
+    text-align: center; 
+}
+
+
+h1 {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+
+form {
+    background: #1f1f1f; 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+    margin: 0 auto; 
+    max-width: 500px; 
+}
+
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #fff; 
+}
+
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-size: 16px;
+    background: #fff;
+    color: #333;
+}
+
+button {
+    background-color: #5A0FA6; 
+    color: #dcd6d6;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #4b0082;
+}
+
+#message {
+    font-size: 16px;
+    color: #ff0000;
+    margin-top: 10px;
+}
+
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #4b0082;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+a {
+    color: #07030a; 
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+form a {
+    color: #5A0FA6;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+form a:hover {
+    text-decoration: underline;
+}
+.button-link {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    background-color: #810be1c3;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.button-link:hover {
+    background-color: #4b0082;
+}
+h2 {
+    color: #eeeaf0; 
+    text-decoration: none;
+}
+
